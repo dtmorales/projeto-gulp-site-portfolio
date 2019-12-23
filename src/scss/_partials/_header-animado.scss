@@ -1,0 +1,86 @@
+.header-animado{
+    $h: 300px;
+    $w_cenario: 2400px;
+
+    background-color:$main-color;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 26px;
+
+    .container{
+        max-width: 90%;
+        margin: auto;
+    }
+
+    &__title{
+        color: darken($main-color, 30%);
+        font-size: 30px;
+    }
+
+    &__subtitle{
+        color: white;
+        font-size: 24px;
+        line-height: 1.5;
+        font-weight: 300;        
+    }
+
+    &__ilustra{
+        background-image: url(../imagens/cenario_all_960.png); 
+        height: $h / 2;
+        background-size: auto 100%;
+        background-position: center top;
+
+        &>div{
+            display: none;
+            width: $w_cenario * 2;
+        }
+
+        @media screen and (min-width: 480px){
+            background-image: url(../imagens/cenario_all_1530.png); 
+        }
+
+        @keyframes anima_cenario{
+            from{
+                transform: translateX(-50%) translateY(0);
+            } 
+            to {
+                transform: translateX(0%) translateY(0);
+            }
+        }
+
+        @mixin anima($imagem, $tempo, $direcao: 'reverse'){
+            background-image: url(../imagens/cenario_#{$imagem}.png);
+            animation: anima_cenario #{$tempo} linear infinite #{$direcao};
+        }
+
+        @media screen and (min-width: 960px){
+            background-image: url(../imagens/cenario_bg.png); 
+            height: $h;
+            position: relative;
+
+            &>div{
+                display: block;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            $anima_elements: 'nuvens' 90s,
+                            'casas' 30s,
+                            'rua' 30s,
+                            'carrosCima' 15s,
+                            'carrosBaixo' 15s normal;
+
+            @each $el, $tempo, $dir in $anima_elements{
+                @if not $dir {
+                    $dir: reverse;
+                }
+                .#{$el} {
+                    @include anima(#{$el}, $tempo, $dir);
+                }
+            }
+        }
+    }
+}

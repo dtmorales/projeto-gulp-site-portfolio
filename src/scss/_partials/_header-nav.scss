@@ -1,0 +1,128 @@
+.js.menu-opened{
+    overflow: hidden;
+    &:after{
+        content: "";
+        display: block;
+        position: fixed;
+        top: 50px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        
+        background: rgba(0,0,0,.5);
+    }
+}
+
+.header-nav{
+    
+    $h: 50px;
+    $breakpoint: 680px;
+    
+    background-color: lighten($main-color, 10%);
+    
+    .js &{
+        height: $h;
+                
+        .container{
+            height: 100%;
+        }
+    }
+    
+    &__logo{
+        display: inline-block;
+        max-width:350px;
+        height: $h;
+        position: relative;
+        top: 10px;
+        z-index: 20;
+        
+        img{
+            max-width: 100%;
+            height: 100%;
+        }
+    }
+    
+    &__hamburgger{
+        display: none;
+        
+        .js &{
+            display: inline-block;
+            float: right;
+            height: 100%;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 2em;
+            padding: 0 .5em;
+            
+            &:hover, &:focus{
+                background: lighten($main-color, 5%);
+            }
+            
+            @media screen and (min-width: #{$breakpoint}){
+                display: none;
+            }
+        }
+    }
+    
+    &__menu{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        
+        a{
+            color: white;
+            display: block;
+            font-size: 1.5em;
+            border-top: 1px solid darken($main-color, 5%);
+            padding: 1em;
+            
+            &:hover{
+                background: darken($main-color, 3%);
+            }
+        }
+        
+        .js &{
+            @media screen and (max-width: #{$breakpoint}){
+                background: darken($main-color, 10);
+                position: fixed;
+                z-index: 10;
+                top: $h;
+                left: -100%;
+                width: 80%;
+                bottom: 0;
+                transition: left .3s ease-out;
+            }            
+            
+        }
+        
+        .menu-opened &{
+            display: block;
+            
+            @media screen and (max-width: #{$breakpoint}){
+                left: 0;
+            }
+        }
+        
+        @media screen and (min-width: #{$breakpoint}){
+            display: inline-block;
+            float: right;
+            height: $h;
+
+            li{
+                display: inline-block;
+                
+                a{
+                    border-top: none;
+                    transition: all .3s ease-in-out;
+                    padding: 15px;
+                    
+                    &:hover{
+                        transform: translateY(.5em);
+                        box-shadow: 0 5px 15px -10px black;
+                    }
+                }
+            }
+        }
+    }
+}
